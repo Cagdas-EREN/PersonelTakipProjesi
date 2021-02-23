@@ -1,0 +1,26 @@
+﻿<mah:MetroWindow x:Class="PersonelTakip.AgiEkle"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:PersonelTakip"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:models="clr-namespace:PersonelTakip.Models"
+                 mc:Ignorable="d"
+                 Title="AgiEkle" Height="450" Width="800">
+    <Grid x:Name="grdAgy" d:DataContext="{d:DesignInstance models:Agy}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Vertical" Margin="10">
+            <Label Content="Medeni Durumu" />
+            <TextBox x:Name="txtName" Text="{Binding Name}" Width="300" HorizontalAlignment="Left"/>
+            <Label Content="Tutar" />
+            <TextBox x:Name="txtAmount" Text="{Binding Amount, StringFormat=C2, ConverterCulture='TR-tr'}" Width="150" HorizontalAlignment="Left"/>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Button x:Name="btnİnsert" Content="Kaydet" VerticalAlignment="Center" Width="75" Grid.Row="1" Click="btnİnsert_Click"/>
+        </Grid>
+    </Grid>
+</mah:MetroWindow>

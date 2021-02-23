@@ -1,0 +1,30 @@
+﻿<mah:MetroWindow x:Class="PersonelTakip.İzinEkle"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:PersonelTakip"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 mc:Ignorable="d"
+                 Title="İzinEkle" Height="450" Width="800" Loaded="MetroWindow_Loaded">
+    <Grid x:Name="grdPermission">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10">
+            <Label Content="Çıkış Tarihi" />
+            <DatePicker x:Name="txtstardate" SelectedDate="{Binding StarDate}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+            <Label Content="Dönüş Tarihi" />
+            <DatePicker x:Name="txtPhone" SelectedDate="{Binding EndDate}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+            <Label Content="Gün" />
+            <mah:NumericUpDown x:Name="txtday" Value="{Binding Day}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+            <Label Content="İzin Tipi" />
+            <ComboBox x:Name="cbPermissionType" Text="{Binding PermissionType}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Button x:Name="btnİnsert" Content="Kaydet" VerticalAlignment="Center" Width="75" Grid.Row="1" Click="btnİnsert_Click"/>
+        </Grid>
+        
+    </Grid>
+</mah:MetroWindow>

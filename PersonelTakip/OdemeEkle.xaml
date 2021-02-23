@@ -1,0 +1,33 @@
+﻿<mah:MetroWindow x:Class="PersonelTakip.OdemeEkle"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:PersonelTakip"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:models="clr-namespace:PersonelTakip.Models"
+                 mc:Ignorable="d"
+                 Title="OdemeEkle" Height="450" Width="800" Loaded="MetroWindow_Loaded">
+    <Grid x:Name="grdPayment" d:DataContext="{d:DesignInstance models:Payment}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10">
+            <!--<Label Content="Agi" />-->
+            <!--<ComboBox x:Name="txtAgy" SelectedValue="{Binding AgiId, Mode=TwoWay}" DisplayMemberPath="Name" SelectedValuePath="Id" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" ></ComboBox>-->
+            <Label Content="Ödeme Yılı" />
+            <ComboBox x:Name="txtYear" SelectedValue="{Binding Year}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" ></ComboBox>
+            <Label Content="Ödeme Ayı" />
+            <ComboBox x:Name="txtMonth" Text="{Binding Month}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+            <Label Content="Tutar" />
+            <TextBox x:Name="txtAmount" Text="{Binding Amount}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+            <Label Content="Ödeme Tipi" />
+            <ComboBox x:Name="cbPaymentType" Text="{Binding PaymentType}" ItemsSource="{Binding PaymentType}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Button x:Name="btnİnsert" Content="Kaydet" VerticalAlignment="Center" Width="75" Grid.Row="1" Click="btnİnsert_Click"/>
+        </Grid>
+        
+    </Grid>
+</mah:MetroWindow>

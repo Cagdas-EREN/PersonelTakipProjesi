@@ -1,0 +1,663 @@
+﻿<mah:MetroWindow x:Class="PersonelTakip.MainWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:local="clr-namespace:PersonelTakip"
+                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                     xmlns:models="clr-namespace:PersonelTakip.Models"
+                     mc:Ignorable="d"
+                     Title="MainWindow" Height="700" Width="1000" Loaded="MetroWindow_Loaded">
+
+    <Grid>
+        <TabControl>
+            <TabItem Header="Personel">
+                <DockPanel>
+                    <Menu DockPanel.Dock="Top">
+                        <MenuItem Header="Personel">
+                            <MenuItem Header="Çalışan Ekle" Click="btnAdded_Click">
+                            </MenuItem>
+                            <MenuItem Header="Çalışan Güncelle" Click="btnUpdate_Click" />
+                            <MenuItem Header="Sil" Click="btnDelete_Click" />
+                        </MenuItem>
+                        <MenuItem Header="İrtibat">
+                            <MenuItem Header="İrtibat Ekle" Click="btnContactAdd_Click" />
+                            <MenuItem Header="İrtibat Güncelle" Click="btnContactUpdate_Click" />
+                            <MenuItem Header="Sil" Click="btnContactDelete_Click"  />
+                        </MenuItem>
+                        <MenuItem Header="İzinler">
+                            <MenuItem Header="Ekle" Click="btnPermissionAdd_Click" />
+                            <MenuItem Header="Güncelle" Click="btnPermissionUpdate_Click" />
+                            <MenuItem Header="Sil" Click="btnPermissionDelete_Click" />
+                        </MenuItem>
+                        <MenuItem Header="Ödemeler">
+                            <MenuItem Header="Ekle" Click="btnPaymentAdd_Click" />
+                            <MenuItem Header="Güncelle" Click="btnPaymentUpdate_Click" />
+                            <MenuItem Header="Sil" Click="btnPaymentDelete_Click" />
+                        </MenuItem>
+
+                    </Menu>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="157.267" />
+                            <ColumnDefinition Width="92.733"/>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                        </Grid>
+                        <Border BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="2">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                               
+                                <Grid Grid.Row="0">
+                                    <TextBox DockPanel.Dock="Top" Margin="0,20,0,0" Name="txtFilter" Width="225" TextChanged="txtFilter_TextChanged"  mah:TextBoxHelper.Watermark="Çalışan Adı"/>
+
+                                </Grid>
+                                <Separator Grid.Row="1"/>
+
+                                <ListBox Grid.Row="2" Grid.Column="0" x:Name="lbEmployee" Margin="10,0,0,0" SelectionChanged="lbEmployee_SelectionChanged">
+
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+
+                                            <Grid Margin="10,10,0,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="160"/>
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                                                    <TextBlock FontWeight="bold" FontSize="16" Text="{Binding FirstName}"/>
+                                                    <TextBlock Text=" " />
+                                                    <TextBlock FontWeight="bold" FontSize="16" Text="{Binding LastName}"/>
+                                                </StackPanel>
+                                                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                                                    <TextBlock FontStyle="Italic" FontSize="12" Text="{Binding Departman.DepartmanName}"/>
+                                                    <TextBlock Text=" " />
+                                                    <TextBlock FontStyle="Italic" FontSize="12" Text="{Binding Title.TaskName}"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Grid>
+                        </Border>
+
+                        <Grid Grid.Column="2" Grid.Row="0" Margin="10,0,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="2">
+                                <Grid Grid.Row="0" Name="grdEmployees" DataContext="{Binding ElementName=lbEmployee, Path=SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" d:DataContext="{d:DesignInstance models:Employee}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10"  IsEnabled="False">
+                                        <Label Content="Personel Kodu" FontWeight="Bold" />
+                                        <TextBox x:Name="txtStaffCode" Text="{Binding StaffCode}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                        <Label Content="TC No"  FontWeight="Bold" />
+                                        <TextBox x:Name="txtIdNumber" Text="{Binding IdNumber}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                        <Label Content="Adı" FontWeight="Bold" />
+                                        <TextBox x:Name="txtFirstName" Text="{Binding FirstName}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                        <Label Content="Soyadı" FontWeight="Bold" />
+                                        <TextBox x:Name="txtLastName" Text="{Binding LastName}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                        <Label Content="Email" FontWeight="Bold" />
+                                        <TextBox x:Name="txtEmail" Text="{Binding Email}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                        <Label Content="Telefonu" FontWeight="Bold" />
+                                        <TextBox x:Name="txtCellPhone" Text="{Binding CellPhone}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="10"  IsEnabled="False">
+                                        <Label Content="Doğum Tarihi" FontWeight="Bold" />
+                                        <TextBox x:Name="txtBırthdate" Text="{Binding Birthdate, StringFormat='dd-MM-yyyy'}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                        <Label Content="Cinsiyet" FontWeight="Bold" />
+                                        <TextBox x:Name="txtGender" Text="{Binding Gender}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                        <Label Content="Uyruğu" FontWeight="Bold" />
+                                        <TextBox x:Name="txtNationality" Text="{Binding Nationality}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                        <Label Content="Personel Durumu" FontWeight="Bold" />
+                                        <TextBox x:Name="txtEmployeeStatus" Text="{Binding EmployeeStatus }" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                        <Label Content="Personel Tipi" FontWeight="Bold" />
+                                        <TextBox x:Name="txtEmployeeType" Text="{Binding EmployeeType }" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                        <Label Content="Maaş" FontWeight="Bold" />
+                                        <TextBox x:Name="txtAmount" Text="{Binding Amount, StringFormat=C2, ConverterCulture='TR-tr' }" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" Margin="10"  IsEnabled="False">
+                                        <Label Content="Agi Tutarı" FontWeight="Bold" />
+                                        <TextBox x:Name="txtAgy" Text="{Binding Agy.Amount, StringFormat=C2, ConverterCulture='TR-tr'}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                        <Label Content="Giriş Tarihi" FontWeight="Bold" />
+                                        <TextBox x:Name="txtStarDate" Text="{Binding StarDate, StringFormat='dd-MM-yyyy'}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                        <Label Content="Çıkış Tarihi" FontWeight="Bold" />
+                                        <TextBox x:Name="txtEndDate" Text="{Binding EndDate}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                        <Label Content="İl" />
+                                        <TextBox x:Name="txtProvinceId" Text="{Binding District.Province.ProvinceName}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                        <Label Content="İlçe" />
+                                        <TextBox x:Name="txtDistrictId" Text="{Binding District.DistrictName}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                        <Label Content="Adres" FontWeight="Bold" />
+                                        <TextBox x:Name="txtAddress" Text="{Binding Address}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <Border Grid.Row="1" BorderBrush="AntiqueWhite" BorderThickness="2">
+                                <!--<Grid Grid.Row="1">
+                                    <Button x:Name="btnAdded" Content="Ekle" HorizontalAlignment="Left" Margin="10,10,0,0" Width="75" Grid.Row="1" VerticalAlignment="Top" Click="btnAdded_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}"/>
+                                    <Button Name="btnUpdate" Content="Güncelle" HorizontalAlignment="Left" Margin="100,10,0,9" Width="75" Click="btnUpdate_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}"/>
+                                    <Button Name="btnDelete" Content="Sil" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,10,0,0" Width="75" Grid.Row="1" Click="btnDelete_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" />
+                                </Grid>-->
+                            </Border>
+                            <Border Grid.Row="2" BorderBrush="Black" BorderThickness="2">
+                                <Grid Grid.Row="2" Margin="0,10,0,0">
+                                    <TabControl x:Name="tbControlPersoneller" SelectionChanged="tbControlPersoneller_SelectionChanged">
+                                        <TabItem Header="İrtibatlar">
+                                            <Grid x:Name="grdContact" DataContext="{Binding ElementName=lbEmployee, Path=SelectedItem}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="49*"/>
+                                                    <ColumnDefinition Width="108*"/>
+                                                    <ColumnDefinition Width="559*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="40" />
+                                                </Grid.RowDefinitions>
+                                                <DataGrid Grid.Row="0" x:Name="dtgIrtibatlar" AutoGenerateColumns="False" Grid.ColumnSpan="3">
+                                                    <DataGrid.Columns>
+                                                        <DataGridTextColumn Header="Adı" Binding="{Binding FirstName}" />
+                                                        <DataGridTextColumn Header="Soyadı" Binding="{Binding LastName}" />
+                                                        <DataGridTextColumn Header="Telefon" Binding="{Binding Phone}" />
+                                                        <DataGridTextColumn Header="Yakınlık Derecesi" Binding="{Binding Relationship}" />
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
+                                                <!--<Grid Grid.Row="1" Grid.ColumnSpan="3">
+                                                    <Button x:Name="btnContactAdd" Content="Ekle" HorizontalAlignment="Left" Margin="10,10,0,0" Width="75" Grid.Row="1" VerticalAlignment="Top" Click="btnContactAdd_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}"/>
+                                                    <Button Name="btnContactUpdate" Content="Güncelle" HorizontalAlignment="Left" Margin="100,10,0,0" Width="75" Grid.Row="1" VerticalAlignment="Top" Click="btnContactUpdate_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}"/>
+                                                    <Button Name="btnContactDelete" Content="Sil" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,10,0,0" Width="75" Grid.Row="1" Click="btnContactDelete_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" />
+                                                </Grid>-->
+                                            </Grid>
+                                        </TabItem>
+                                        <TabItem Header="İzinler">
+                                            <Grid x:Name="grdPermission" DataContext="{Binding ElementName=lbEmployee, Path=SelectedItem}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="49*"/>
+                                                    <ColumnDefinition Width="108*"/>
+                                                    <ColumnDefinition Width="559*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="40" />
+                                                </Grid.RowDefinitions>
+                                                <DataGrid Grid.Row="0" x:Name="dtgİzinler" AutoGenerateColumns="False" Grid.ColumnSpan="3">
+                                                    <DataGrid.Columns>
+                                                        <DataGridTextColumn Header="Çıkış Tarihi" Binding="{Binding StarDate, StringFormat='dd-MM-yyyy'}" />
+                                                        <DataGridTextColumn Header="GÜn" Binding="{Binding Day}" />
+                                                        <DataGridTextColumn Header="Dönüş Tarihi" Binding="{Binding EndDate, StringFormat='dd-MM-yyyy'}" />
+                                                        <DataGridTextColumn Header="İzin Tipi" Binding="{Binding PermissionType}" />
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
+                                                <!--<Grid Grid.Row="1" Grid.ColumnSpan="3">
+                                                    <Button x:Name="btnPermissionAdd" Content="Ekle" HorizontalAlignment="Left" Margin="10,10,0,0" Width="75" Grid.Row="1" VerticalAlignment="Top" Click="btnPermissionAdd_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}"/>
+                                                    <Button Name="btnPermissionUpdate" Content="Güncelle" HorizontalAlignment="Left" Margin="100,10,0,0" Width="75" Grid.Row="1" VerticalAlignment="Top" Click="btnPermissionUpdate_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}"/>
+                                                    <Button Name="btnPermissionDelete" Content="Sil" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,10,0,0" Width="75" Grid.Row="1" Click="btnPermissionDelete_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" />
+                                                </Grid>-->
+                                            </Grid>
+                                        </TabItem>
+                                        <TabItem Header="Ödemeler">
+                                            <Grid x:Name="grdPAyment" DataContext="{Binding ElementName=lbEmployee, Path=SelectedItem}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="49*"/>
+                                                    <ColumnDefinition Width="108*"/>
+                                                    <ColumnDefinition Width="94*"/>
+                                                    <ColumnDefinition Width="465*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="40" />
+                                                </Grid.RowDefinitions>
+                                                <DataGrid Grid.Row="0" x:Name="dtgOdemeler" AutoGenerateColumns="False" Grid.ColumnSpan="4" d:DataContext="{d:DesignInstance models:Payment}">
+                                                    <DataGrid.Columns>
+                                                        <!--<DataGridTextColumn Header="Agi Durumu" Binding="{Binding Agy.Name}" />
+                                                    <DataGridTextColumn Header="Agi Tutarı" Binding="{Binding Agy.Amount, StringFormat=C2, ConverterCulture='TR-tr'}" />-->
+                                                        <DataGridTextColumn Header="Yıl" Binding="{Binding Year}" />
+                                                        <DataGridTextColumn Header="Ay" Binding="{Binding Month}" />
+                                                        <DataGridTextColumn Header="Tutar" Binding="{Binding Amount , StringFormat=C2, ConverterCulture='TR-tr'}" />
+                                                        <DataGridTextColumn Header="Ödeme Tipi" Binding="{Binding PaymentType}" />
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
+                                                <!--<Grid Grid.Row="1" Grid.ColumnSpan="4">
+                                                    <Button x:Name="btnPaymentAdd" Content="Ekle" HorizontalAlignment="Left" Margin="10,10,0,0" Width="75" Grid.Row="1" VerticalAlignment="Top" Click="btnPaymentAdd_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}"/>
+                                                    <Button Name="btnPaymentUpdate" Content="Güncelle" HorizontalAlignment="Left" Margin="100,10,0,0" Width="75" Grid.Row="1" VerticalAlignment="Top" Click="btnPaymentUpdate_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}"/>
+                                                    <Button Name="btnPaymentDelete" Content="Sil" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,10,0,0" Width="75" Grid.Row="1" Click="btnPaymentDelete_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" />
+                                                </Grid>-->
+                                            </Grid>
+
+                                        </TabItem>
+
+                                    </TabControl>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </DockPanel>
+
+            </TabItem>
+            <TabItem Header="Bölümler">
+                <DockPanel>
+                    <Menu DockPanel.Dock="Top">
+                        <MenuItem Header="Departman">
+                            <MenuItem Header="Ekle" Click="btnDepartmanAdd_Click" />
+                            <MenuItem Header="Güncelle" Click="btnDepartmanUpdate_Click" />
+                            <MenuItem Header="Sil" Click="btnDepartmanDelete_Click" />
+                        </MenuItem>
+
+                    </Menu>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="250" />
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="2">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="200" />
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="1">
+                                        <DataGrid x:Name="dtgDepartmans" Margin="10">
+
+                                        </DataGrid>
+                                    </Grid>
+
+                                    <StackPanel Grid.Column="0"  Name="spDepartman" Orientation="Vertical" Margin="10" DataContext="{Binding ElementName=lvDepartman, Path=SelectedItem}" Grid.ColumnSpan="2">
+                                        <Label Content="Görev Adı" FontWeight="Bold" />
+                                        <TextBox x:Name="txtDepartmanName" Text="{Binding DepartmanName}" Width="150" Height="10" HorizontalAlignment="Left" />
+                                    </StackPanel>
+                                </Grid>
+                                <!--<Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+                                    <Button x:Name="btnDepartmanAdd" Content="Ekle" HorizontalAlignment="Left" Margin="10,10,0,0" Width="75" Grid.Row="1" VerticalAlignment="Top" Click="btnDepartmanAdd_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}"/>
+                                    <Button Name="btnDepartmanUpdate" Content="Güncelle" HorizontalAlignment="Left" Margin="100,10,0,0" Width="75" Grid.Row="1" VerticalAlignment="Top" Click="btnDepartmanUpdate_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}"/>
+                                    <Button Name="btnDepartmanDelete" Content="Sil" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,10,0,0" Width="75" Grid.Row="1" Click="btnDepartmanDelete_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" />
+                                </Grid>-->
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="2">
+                            <DataGrid ItemsSource="{Binding ElementName=dtgDepartmans, Path=SelectedItem.Employees}" d:DataContext="{d:DesignInstance models:Employee}" AutoGenerateColumns="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ADI" Binding="{Binding Path=FirstName}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="SOYADI" Binding="{Binding Path=LastName}"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+
+                    </Grid>
+                </DockPanel>
+
+            </TabItem>
+            <TabItem Header="Görevler">
+                <DockPanel>
+                    <Menu DockPanel.Dock="Top">
+                        <MenuItem Header="Görev">
+                            <MenuItem Header="Ekle" Click="btnTaskAdd_Click" />
+                            <MenuItem Header="Güncelle" Click="btnTaskUpdate_Click" />
+                            <MenuItem Header="Sil" Click="btnTaskDelete_Click" />
+                        </MenuItem>
+
+                    </Menu>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="250" />
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="2">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="200" />
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="1">
+                                        <DataGrid x:Name="dtgTitles" Margin="10">
+
+                                        </DataGrid>
+                                    </Grid>
+                                    <StackPanel Grid.Column="0"  Name="spTask" Orientation="Vertical" Margin="10" DataContext="{Binding ElementName=lvTask, Path=SelectedItem}" Grid.ColumnSpan="2">
+                                        <Label Content="Görev Adı" FontWeight="Bold" />
+                                        <TextBox x:Name="txtTaskName" Text="{Binding TaskName}" Width="150" Height="10" HorizontalAlignment="Left" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <!--<Grid Grid.Row="1" Grid.ColumnSpan="2">
+                                    -->
+                                <!--<Button x:Name="btnTaskAdd" Content="Ekle" HorizontalAlignment="Left" Margin="10,10,0,0" Width="75" Grid.Row="1" VerticalAlignment="Top" Click="btnTaskAdd_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}"/>-->
+                                <!--
+                                    <Button Name="btnTaskUpdate" Content="Güncelle" HorizontalAlignment="Left" Margin="100,10,0,0" Width="75" Grid.Row="1" VerticalAlignment="Top" Click="btnTaskUpdate_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}"/>
+                                    <Button Name="btnTaskDelete" Content="Sil" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,10,0,0" Width="75" Grid.Row="1" Click="btnTaskDelete_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" />
+                                </Grid>-->
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="2">
+                            <DataGrid ItemsSource="{Binding ElementName=dtgTitles, Path=SelectedItem.Employees}" d:DataContext="{d:DesignInstance models:Employee}" AutoGenerateColumns="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ADI" Binding="{Binding Path=FirstName}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="ADI" Binding="{Binding Path=LastName}"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+                    </Grid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Agi">
+                <Grid DataContext="{Binding ElementName=lvAgy, Path=SelectedItem}" d:DataContext="{d:DesignInstance models:Agy}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Vertical">
+                            <Label Content="Medeni Durumu" />
+                            <TextBox x:Name="txtAgyName" Text="{Binding Name }" Width="300" HorizontalAlignment="Left" />
+                            <!--<Label Content="Açıklama" />
+                            <TextBox x:Name="txtAgyDescription" Text="{Binding Description }" Width="300" HorizontalAlignment="Left" />-->
+                            <Label Content="Tutar" />
+                            <TextBox x:Name="txtAgyAmount" Text="{Binding Amount, StringFormat=C2, ConverterCulture='TR-tr'}" Width="100" HorizontalAlignment="Left" />
+                        </StackPanel>
+                        <Grid Grid.Row="1">
+                            <Button x:Name="btnAgyAdd" Content="Ekle" HorizontalAlignment="Left" Margin="10,10,0,0" Width="75" Grid.Row="1" VerticalAlignment="Top" Click="btnAgyAdd_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}"/>
+                            <Button Name="btnAgyUpdate" Content="Güncelle" HorizontalAlignment="Left" Margin="100,10,0,0" Width="75" Grid.Row="1" VerticalAlignment="Top" Click="btnAgyUpdate_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}"/>
+                            <Button Name="btnAgyDelete" Content="Sil" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,10,0,0" Width="75" Grid.Row="1" Click="btnAgyDelete_Click" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" />
+                        </Grid>
+                    </Grid>
+                    <Border Grid.Row="1" BorderBrush="Black" BorderThickness="2">
+                        <Grid Grid.Row="1">
+                            <ListView Margin="10" Name="lvAgy">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Medeni Durumu" Width="120" DisplayMemberBinding="{Binding Name}"/>
+                                        <!--<GridViewColumn Header="Açıklama" Width="120" DisplayMemberBinding="{Binding Description}"/>-->
+                                        <GridViewColumn Header="Tutar" Width="120" DisplayMemberBinding="{Binding Amount, StringFormat=C2, ConverterCulture='TR-tr'}"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+
+
+    </Grid>
+
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl x:Name="flyoutsControl" Loaded="flyoutsControl_Loaded">
+            <!--Çalışan Ekleme / Güncelleme Ekranı-->
+            <mah:Flyout x:Name="flyoutEmployee"
+                             AreAnimationsEnabled="True"
+                             Width="400"
+                             Header=""
+                             Background="GhostWhite"
+                             Position="Right"
+                             IsModal="True"
+                             Theme="Adapt"
+                             FocusedElement="{Binding ElementName=txtAdi}">
+                <Grid x:Name="grdEmployeeAdd" d:DataContext="{d:DesignInstance models:Employee}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Name="grdNewEmployee">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ScrollViewer>
+                            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="100,0,20,0">
+                                <Label Content="Personel Kodu" />
+                                <TextBox x:Name="ftxtStaffCode" Text="{Binding StaffCode}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <Label Content="TC No" />
+                                <TextBox x:Name="ftxtIdNumber" Text="{Binding IdNumber}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <Label Content="Adı" />
+                                <TextBox x:Name="ftxtFirstName" Text="{Binding FirstName}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <Label Content="Soyadı" />
+                                <TextBox x:Name="ftxtLastName" Text="{Binding LastName}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <Label Content="Email" />
+                                <TextBox x:Name="ftxtEmail" Text="{Binding Email}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <Label Content="Telefonu" />
+                                <TextBox x:Name="ftxtCellPhone" Text="{Binding CellPhone}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <Label Content="Doğum Tarihi" />
+                                <DatePicker x:Name="dpBırthDate" SelectedDate="{Binding Birthdate}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+
+                                <!--</StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10">-->
+                                <Label Content="Görev" />
+                                <ComboBox x:Name="cbTask" SelectedValue="{Binding TaskId, Mode=TwoWay}" DisplayMemberPath="TaskName" SelectedValuePath="Id" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <Label Content="Bölüm" />
+                                <ComboBox x:Name="cbDeparmant" SelectedValue="{Binding DeparmantId, Mode=TwoWay}" DisplayMemberPath="DepartmanName" SelectedValuePath="Id" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <Label Content="Giriş Tarihi" />
+                                <DatePicker x:Name="dpStarDate" SelectedDate="{Binding StarDate}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <Label Content="Çıkış Tarihi" />
+                                <DatePicker x:Name="dpEndDate" SelectedDate="{Binding EndDate}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <Label Content="Agi" />
+                                <ComboBox x:Name="cbAgiId" SelectedValue="{Binding AgiId, Mode=TwoWay}" DisplayMemberPath="Name" SelectedValuePath="Id"  Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <Label Content="Personel Durumu" />
+                                <ComboBox x:Name="cbEmployeeStatus" SelectedItem="{Binding EmployeeStatus}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <Label Content="Maaş" />
+                                <TextBox x:Name="cbAmount" Text="{Binding Amount, StringFormat=C2, ConverterCulture='TR-tr'}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+
+
+
+                                <!--</StackPanel>
+                        <StackPanel Grid.Column="2" Orientation="Vertical" Margin="10">-->
+                                <Label Content="Personel Tipi" />
+                                <ComboBox x:Name="cbEmployeeType" SelectedItem="{Binding EmployeeType}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <Label Content="Cinsiyet" />
+                                <ComboBox x:Name="cbGender" SelectedItem="{Binding Gender}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <Label Content="Uyruğu" />
+                                <ComboBox x:Name="cbNationality" SelectedItem="{Binding Nationality}"  Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <Label Content="İl" />
+                                <ComboBox x:Name="cbProvince" SelectedValue="{Binding Path=District.ProvinceId}" DisplayMemberPath="ProvinceName" SelectedValuePath="Id" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <Label Content="İlçe" />
+                                <ComboBox x:Name="cbDistrict" ItemsSource="{Binding ElementName=cbProvince, Path=SelectedItem.Districts}" SelectedValue="{Binding DistrictId, Mode=TwoWay}" DisplayMemberPath="DistrictName" SelectedValuePath="Id" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1,0,0,0" />
+                                <Label Content="Adres" />
+                                <TextBox x:Name="ftxtAddress" Text="{Binding Address}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Button x:Name="btnİnsert" Content="Kaydet" VerticalAlignment="Center" Width="75" Margin="10,10,200,0" Grid.Row="1" Click="btnİnsert_Click" />
+                        <Button x:Name="btnCancel" Content="İptal" VerticalAlignment="Center" Width="75" Margin="10,10,0,0" Grid.Row="1" Click="btnCancel_Click" />
+                    </Grid>
+                </Grid>
+
+            </mah:Flyout>
+            <!--İrtibat Ekleme / Güncelleme Ekranı-->
+            <mah:Flyout x:Name="FlyoutContact" AreAnimationsEnabled="True"
+                        Width="400"
+                        Header=""
+                        Background="GhostWhite"
+                        Position="Right"
+                        IsModal="True"
+                        Theme="Adapt"
+                        FocusedElement="{Binding ElementName=txtAdi}">
+                <Grid x:Name="fgrdContact">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10">
+                        <!--<Label Content="Personel Adı" />
+            <ComboBox x:Name="cbEmployee" DisplayMemberPath="FirstName" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />-->
+                        <Label Content="Adı" />
+                        <TextBox x:Name="ftxtContactFirstName" Text="{Binding FirstName}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                        <Label Content="Soyadı" />
+                        <TextBox x:Name="ftxtContactLastName" Text="{Binding LastName}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                        <Label Content="Telefonu" />
+                        <TextBox x:Name="txtPhone" Text="{Binding Phone}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                        <Label Content="Yakınlık Derecesi" />
+                        <TextBox x:Name="txtRelationship" Text="{Binding Relationship}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    </StackPanel>
+                    <Grid Grid.Row="1">
+                        <Button x:Name="fbtnContactİnsert" Content="Kaydet" VerticalAlignment="Center" Width="75" Margin="10,10,200,0" Grid.Row="1" Click="btnContactİnsert_Click" />
+                        <Button x:Name="fbtnContactCancel" Content="İptal" VerticalAlignment="Center" Width="75" Margin="10,10,0,0" Grid.Row="1" Click="btnContactCancel_Click" />
+                    </Grid>
+                </Grid>
+
+            </mah:Flyout>
+            <!--İzin Ekleme / Güncelleme Ekranı-->
+            <mah:Flyout x:Name="FlyoutPermission" AreAnimationsEnabled="True"
+                        Width="400"
+                        Header=""
+                        Background="GhostWhite"
+                        Position="Right"
+                        IsModal="True"
+                        Theme="Adapt"
+                        FocusedElement="{Binding ElementName=txtAdi}">
+                <Grid x:Name="fgrdPermission">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10">
+                        <Label Content="Çıkış Tarihi" />
+                        <DatePicker x:Name="txtstardate" SelectedDate="{Binding StarDate}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                        <Label Content="Dönüş Tarihi" />
+                        <DatePicker x:Name="ftxtPhone" SelectedDate="{Binding EndDate}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                        <!--<Label Content="Gün" />
+                        <mah:NumericUpDown x:Name="txtday" Value="{Binding Day}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />-->
+                        <Label Content="İzin Tipi" />
+                        <ComboBox x:Name="cbPermissionType" Text="{Binding PermissionType}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    </StackPanel>
+                    <Grid Grid.Row="1">
+                        <Button x:Name="fbtnPermissionİnsert" Content="Kaydet" VerticalAlignment="Center" Width="75" Margin="10,10,200,0" Grid.Row="1" Click="btnPermissionİnsert_Click" />
+                        <Button x:Name="fbtnPermissionCancel" Content="İptal" VerticalAlignment="Center" Width="75" Margin="10,10,0,0" Grid.Row="1" Click="btnPermissionCancel_Click" />
+                    </Grid>
+        
+                </Grid>
+
+            </mah:Flyout>
+            <!--Ödeme Ekleme / Güncelleme Ekranı-->
+            <mah:Flyout x:Name="FlyoutPayments" AreAnimationsEnabled="True"
+                        Width="400"
+                        Header=""
+                        Background="GhostWhite"
+                        Position="Right"
+                        IsModal="True"
+                        Theme="Adapt"
+                        FocusedElement="{Binding ElementName=txtAdi}">
+                <Grid x:Name="fgrdPayment" d:DataContext="{d:DesignInstance models:Payment}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10">
+                        <!--<Label Content="Agi" />-->
+                        <!--<ComboBox x:Name="txtAgy" SelectedValue="{Binding AgiId, Mode=TwoWay}" DisplayMemberPath="Name" SelectedValuePath="Id" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" ></ComboBox>-->
+                        <Label Content="Ödeme Yılı" />
+                        <ComboBox x:Name="txtYear" SelectedValue="{Binding Year}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" ></ComboBox>
+                        <Label Content="Ödeme Ayı" />
+                        <ComboBox x:Name="txtMonth" Text="{Binding Month}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                        <Label Content="Tutar" />
+                        <TextBox x:Name="ftxtAmount" Text="{Binding Amount}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                        <Label Content="Ödeme Tipi" />
+                        <ComboBox x:Name="cbPaymentType" Text="{Binding PaymentType}" ItemsSource="{Binding PaymentType}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    </StackPanel>
+                    <Grid Grid.Row="1">
+                        <Button x:Name="fbtnPaymentİnsert" Content="Kaydet" VerticalAlignment="Center" Width="75" Margin="10,10,200,0" Grid.Row="1" Click="btnPaymentİnsert_Click" />
+                        <Button x:Name="fbtnPaymentCancel" Content="İptal" VerticalAlignment="Center" Width="75" Margin="10,10,0,0" Grid.Row="1" Click="btnPaymentCancel_Click" />
+                    </Grid>
+        
+                </Grid>
+
+            </mah:Flyout>
+            <!--Departman Ekleme / Güncelleme Ekranı-->
+            <mah:Flyout x:Name="flyoutDerpartman"
+                        AreAnimationsEnabled="True"
+                        Width="400"
+                        Header=""
+                        Background="GhostWhite"
+                        Position="Right"
+                        IsModal="True"
+                        Theme="Adapt"
+                        FocusedElement="{Binding ElementName=txtAdi}">
+                <Grid x:Name="grdGorevler">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10">
+                        <Label Content="Departman Adı" />
+                        <TextBox x:Name="txtDepartman" Text="{Binding DepartmanName}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" ></TextBox>
+                    </StackPanel>
+                    <Grid Grid.Row="1">
+                        <Button x:Name="fbtnDepartmanİnsert" Content="Kaydet" VerticalAlignment="Center" Width="75" Margin="10,10,200,0" Grid.Row="1" Click="btnDepartmanİnsert_Click" />
+                        <Button x:Name="fbtnDepartmanCancel" Content="İptal" VerticalAlignment="Center" Width="75" Margin="10,10,0,0" Grid.Row="1" Click="btnDepartmanCancel_Click" />
+                    </Grid>
+                </Grid>
+
+            </mah:Flyout>
+            <!--Görev Ekleme / Güncelleme Ekranı-->
+            <mah:Flyout x:Name="flyoutTask"
+                        AreAnimationsEnabled="True"
+                        Width="400"
+                        Header=""
+                        Background="GhostWhite"
+                        Position="Right"
+                        IsModal="True"
+                        Theme="Adapt"
+                        FocusedElement="{Binding ElementName=txtAdi}">
+                <Grid x:Name="grdBolümler">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10">
+                        <Label Content="Bölüm Adı" />
+                        <TextBox x:Name="txtTitle" Text="{Binding TaskName}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" ></TextBox>
+                    </StackPanel>
+                    <Grid Grid.Row="1">
+                        <Button x:Name="fbtnTaskİnsert" Content="Kaydet" VerticalAlignment="Center" Width="75" Margin="10,10,200,0" Grid.Row="1" Click="btnTaskİnsert_Click" />
+                        <Button x:Name="fbtnTaskCancel" Content="İptal" VerticalAlignment="Center" Width="75" Margin="10,10,0,0" Grid.Row="1" Click="btnTaskCancel_Click" />
+                    </Grid>
+                </Grid>
+
+            </mah:Flyout>
+
+        </mah:FlyoutsControl>
+
+    </mah:MetroWindow.Flyouts>
+   
+</mah:MetroWindow>

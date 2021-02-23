@@ -1,0 +1,78 @@
+﻿<mah:MetroWindow x:Class="PersonelTakip.CalisanEkle"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:PersonelTakip"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:models="clr-namespace:PersonelTakip.Models"
+                 mc:Ignorable="d"
+                 Title="CalisanEkle" Height="500" Width="800" Loaded="MetroWindow_Loaded">
+    <Grid x:Name="grdEmployeeAdd" d:DataContext="{d:DesignInstance models:Employee}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0" Name="grdNewEmployee">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="10">
+                <Label Content="Personel Kodu" />
+                <TextBox x:Name="txtStaffCode" Text="{Binding StaffCode}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <Label Content="TC No" />
+                <TextBox x:Name="txtIdNumber" Text="{Binding IdNumber}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <Label Content="Adı" />
+                <TextBox x:Name="txtFirstName" Text="{Binding FirstName}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <Label Content="Soyadı" />
+                <TextBox x:Name="txtLastName" Text="{Binding LastName}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <Label Content="Email" />
+                <TextBox x:Name="txtEmail" Text="{Binding Email}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <Label Content="Telefonu" />
+                <TextBox x:Name="txtCellPhone" Text="{Binding CellPhone}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <Label Content="Doğum Tarihi" />
+                <DatePicker x:Name="dpBırthDate" SelectedDate="{Binding Birthdate}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10">
+                <Label Content="Görev" />
+                <ComboBox x:Name="cbTask" SelectedValue="{Binding TaskId, Mode=TwoWay}" DisplayMemberPath="TaskName" SelectedValuePath="Id" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <Label Content="Bölüm" />
+                <ComboBox x:Name="cbDeparmant" SelectedValue="{Binding DeparmantId, Mode=TwoWay}" DisplayMemberPath="DepartmanName" SelectedValuePath="Id" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <Label Content="Giriş Tarihi" />
+                <DatePicker x:Name="dpStarDate" SelectedDate="{Binding StarDate}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <Label Content="Çıkış Tarihi" />
+                <DatePicker x:Name="dpEndDate" SelectedDate="{Binding EndDate}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <Label Content="Agi" />
+                <ComboBox x:Name="cbAgiId" SelectedValue="{Binding AgiId, Mode=TwoWay}" DisplayMemberPath="Name" SelectedValuePath="Id"  Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <Label Content="Personel Durumu" />
+                <ComboBox x:Name="cbEmployeeStatus" SelectedItem="{Binding EmployeeStatus}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <Label Content="Maaş" />
+                <TextBox x:Name="cbAmount" Text="{Binding Amount, StringFormat=C2, ConverterCulture='TR-tr'}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                
+                
+
+            </StackPanel>
+            <StackPanel Grid.Column="2" Orientation="Vertical" Margin="10">
+                <Label Content="Personel Tipi" />
+                <ComboBox x:Name="cbEmployeeType" SelectedItem="{Binding EmployeeType}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <Label Content="Cinsiyet" />
+                <ComboBox x:Name="cbGender" SelectedItem="{Binding Gender}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <Label Content="Uyruğu" />
+                <ComboBox x:Name="cbNationality" SelectedItem="{Binding Nationality}"  Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <Label Content="İl" />
+                <ComboBox x:Name="cbProvince" SelectedValue="{Binding Path=District.ProvinceId}" DisplayMemberPath="ProvinceName" SelectedValuePath="Id" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <Label Content="İlçe" />
+                <ComboBox x:Name="cbDistrict" ItemsSource="{Binding ElementName=cbProvince, Path=SelectedItem.Districts}" SelectedValue="{Binding DistrictId, Mode=TwoWay}" DisplayMemberPath="DistrictName" SelectedValuePath="Id" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1,0,0,0" />
+                <Label Content="Adres" />
+                <TextBox x:Name="txtAddress" Text="{Binding Address}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Button x:Name="btnİnsert" Content="Kaydet" VerticalAlignment="Center" Width="75" Grid.Row="1" Click="btnİnsert_Click"/>
+        </Grid>
+    </Grid>
+</mah:MetroWindow>

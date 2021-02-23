@@ -1,0 +1,31 @@
+﻿<mah:MetroWindow x:Class="PersonelTakip.İrtibatEkle"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:PersonelTakip"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 mc:Ignorable="d"
+                 Title="İrtibatEkle" Height="450" Width="800">
+    <Grid x:Name="grdContact">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10">
+            <!--<Label Content="Personel Adı" />
+            <ComboBox x:Name="cbEmployee" DisplayMemberPath="FirstName" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />-->
+            <Label Content="Adı" />
+            <TextBox x:Name="txtFirstName" Text="{Binding FirstName}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+            <Label Content="Soyadı" />
+            <TextBox x:Name="txtLastName" Text="{Binding LastName}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+            <Label Content="Telefonu" />
+            <TextBox x:Name="txtPhone" Text="{Binding Phone}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+            <Label Content="Yakınlık Derecesi" />
+            <TextBox x:Name="txtRelationship" Text="{Binding Relationship}" Width="150" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Button x:Name="btnİnsert" Content="Kaydet" VerticalAlignment="Center" Width="75" Grid.Row="1" Click="btnİnsert_Click"/>
+        </Grid>
+    </Grid>
+</mah:MetroWindow>

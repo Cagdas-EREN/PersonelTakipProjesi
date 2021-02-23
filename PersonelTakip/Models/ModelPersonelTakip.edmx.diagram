@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b88aebbf34794eab85a3c70b9cedc3dd" Name="Diagram1">
+        <EntityTypeShape EntityType="PersonelTakipModel.Agy" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PersonelTakipModel.Contact" Width="1.5" PointX="7.5" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PersonelTakipModel.Departman" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PersonelTakipModel.District" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PersonelTakipModel.Employee" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PersonelTakipModel.Payment" Width="1.5" PointX="7.5" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PersonelTakipModel.Permission" Width="1.5" PointX="7.5" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PersonelTakipModel.Province" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <AssociationConnector Association="PersonelTakipModel.FK_Contacts_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="PersonelTakipModel.FK_Employees_Departmans" ManuallyRouted="false" />
+        <AssociationConnector Association="PersonelTakipModel.FK_Districts_Provinces" ManuallyRouted="false" />
+        <AssociationConnector Association="PersonelTakipModel.FK_Employees_Districts" ManuallyRouted="false" />
+        <AssociationConnector Association="PersonelTakipModel.FK_Payments_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="PersonelTakipModel.FK_Permissions_Employees" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PersonelTakipModel.sysdiagram" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="PersonelTakipModel.Title" Width="1.5" PointX="10.375" PointY="3.875" />
+        <AssociationConnector Association="PersonelTakipModel.FK_Employees_Tasks1" />
+        <AssociationConnector Association="PersonelTakipModel.FK_Employees_Agies" />
+        <AssociationConnector Association="PersonelTakipModel.FK_Payments_Agies" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
